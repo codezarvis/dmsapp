@@ -88,7 +88,7 @@ public class ParamsController {
         JSONArray array = new JSONArray();
         try {
             MasterService masterService = ServiceUtils.getMasterService();
-            masterList = masterService.findBy(year, branchName, Integer.parseInt(semValue));
+            masterList = masterService.findBy(year, branchName, semValue);
             Iterator<Master> iteratorMaster = masterList.iterator();
             LOG.debug("Total Number of Papers" + masterList.size() + "\n");
             LOG.debug("YEAR\tBRANCH\tSEM\tPAPER\n");
