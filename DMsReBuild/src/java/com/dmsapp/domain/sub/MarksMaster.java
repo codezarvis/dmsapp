@@ -16,7 +16,7 @@ public class MarksMaster extends Domain implements java.io.Serializable {
     private String studentId;
     private String year;
     private String branch;
-    private Integer semister;
+    private String semister;
     private String paper;
     private String internalOne;
     private String internalTwo;
@@ -75,11 +75,11 @@ public class MarksMaster extends Domain implements java.io.Serializable {
         this.paper = paper;
     }
 
-    public Integer getSemister() {
+    public String getSemister() {
         return semister;
     }
 
-    public void setSemister(Integer semister) {
+    public void setSemister(String semister) {
         this.semister = semister;
     }
 
@@ -99,30 +99,11 @@ public class MarksMaster extends Domain implements java.io.Serializable {
         this.year = year;
     }
 
+    @Override
     public String toString() {
-        StringBuilder toStringBuilder = new StringBuilder();
-        toStringBuilder.append(super.toString());
-        toStringBuilder.append("\n");
-        toStringBuilder.append("\nstudentId: ");
-        toStringBuilder.append(studentId);
-        toStringBuilder.append("\nyear: ");
-        toStringBuilder.append(year);
-        toStringBuilder.append("\nbranch: ");
-        toStringBuilder.append(branch);
-        toStringBuilder.append("\nsemister: ");
-        toStringBuilder.append(semister);
-        toStringBuilder.append("\npaper: ");
-        toStringBuilder.append(paper);
-        toStringBuilder.append("\ninternalOne: ");
-        toStringBuilder.append(internalOne);
-        toStringBuilder.append("\ninternalTwo: ");
-        toStringBuilder.append(internalTwo);
-        toStringBuilder.append("\nassignmentMarks: ");
-        toStringBuilder.append(assignmentMarks);
-        toStringBuilder.append("\nattendanceMarks: ");
-        toStringBuilder.append(attendanceMarks);
-        return toStringBuilder.toString();
+        final String TAB = "    ";
+        StringBuilder retValue = new StringBuilder();
+        retValue.append("MarksMaster ( ").append(super.toString()).append(TAB).append("studentId = ").append(this.studentId).append(TAB).append("year = ").append(this.year).append(TAB).append("branch = ").append(this.branch).append(TAB).append("semister = ").append(this.semister).append(TAB).append("paper = ").append(this.paper).append(TAB).append("internalOne = ").append(this.internalOne).append(TAB).append("internalTwo = ").append(this.internalTwo).append(TAB).append("assignmentMarks = ").append(this.assignmentMarks).append(TAB).append("attendanceMarks = ").append(this.attendanceMarks).append(" )");
+        return retValue.toString();
     }
-
-    
 }

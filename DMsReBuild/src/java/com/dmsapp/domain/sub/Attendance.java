@@ -15,7 +15,7 @@ public class Attendance extends Domain implements java.io.Serializable {
 
     private String year;
     private String branch;
-    private Integer semister;
+    private String semister;
     private String paper;
     private String paperCode;
     private String numberOfWorkingDays;
@@ -56,11 +56,11 @@ public class Attendance extends Domain implements java.io.Serializable {
         this.paperCode = paperCode;
     }
 
-    public Integer getSemister() {
+    public String getSemister() {
         return semister;
     }
 
-    public void setSemister(Integer semister) {
+    public void setSemister(String semister) {
         this.semister = semister;
     }
 
