@@ -14,7 +14,7 @@ import java.util.List;
  */
 public interface MasterService extends Service{
 
-    List<Master> findBy(String year, String branch, Integer semister);
+    List<Master> findBy(String year, String branch, String semister);
 
     List<Master> getAll();
 

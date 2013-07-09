@@ -5,7 +5,7 @@
 
 package com.dmsapp.service;
 
-import com.dmsapp.domain.sub.UpdateObject;
+import com.dmsapp.domain.sub.MarksMaster;
 
 /**
  *
@@ -13,5 +13,5 @@ import com.dmsapp.domain.sub.UpdateObject;
  */
 public interface UpdateMarksService extends Service{
 
-    UpdateObject findByStudentId(String studentId, String branch, String year, Integer semister, String papaer, String type);
+    MarksMaster findByStudentId(String studentId, String branch, String year, String semister, String papaer);
 }
