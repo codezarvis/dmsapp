@@ -17,11 +17,12 @@
 	<field name="numberOfPresentedDays" class="java.lang.String"/>
 	<field name="grandTotal" class="java.lang.String"/>
 	<field name="paperCode" class="java.lang.String"/>
+	<field name="hasAssignment" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="116" splitType="Stretch">
+		<band height="122" splitType="Stretch">
 			<staticText>
 				<reportElement uuid="519aeced-6d84-4efe-bc55-53406d1c015b" x="139" y="4" width="420" height="20"/>
 				<textElement textAlignment="Center">
@@ -46,7 +47,7 @@
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[INTERNAL ASSESMENT - CONSOLIDATED STATEMENTS OF MARKS]]></text>
+				<text><![CDATA[INTERNAL ASSESMENT - CONSOLIDATED MARKS STATEMENT]]></text>
 			</staticText>
 			<image>
 				<reportElement uuid="080bdf89-c21e-4eb0-b3ef-65f7c97af072" mode="Transparent" x="11" y="4" width="125" height="105"/>
@@ -113,21 +114,7 @@
 				<text><![CDATA[Tests 20 M]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="49916543-4b7e-4c29-8b17-71e494e855d7" x="369" y="28" width="81" height="28"/>
-				<box>
-					<pen lineWidth="1.5"/>
-					<topPen lineWidth="1.5"/>
-					<leftPen lineWidth="1.5"/>
-					<bottomPen lineWidth="1.5"/>
-					<rightPen lineWidth="1.5"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="SansSerif" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Assignment 5 M]]></text>
-			</staticText>
-			<staticText>
-				<reportElement uuid="49916543-4b7e-4c29-8b17-71e494e855d7" x="450" y="28" width="125" height="28"/>
+				<reportElement uuid="49916543-4b7e-4c29-8b17-71e494e855d7" x="484" y="28" width="91" height="28"/>
 				<box>
 					<pen lineWidth="1.5"/>
 					<topPen lineWidth="1.5"/>
@@ -225,8 +212,8 @@ out of 20]]></text>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="SansSerif" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Presented
-Hours]]></text>
+				<text><![CDATA[Assignment
+Marks]]></text>
 			</staticText>
 			<staticText>
 				<reportElement uuid="49916543-4b7e-4c29-8b17-71e494e855d7" x="369" y="112" width="70" height="28"/>
@@ -335,13 +322,25 @@ Total]]></text>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{paperCode}]]></textFieldExpression>
 			</textField>
+			<staticText>
+				<reportElement uuid="06cf4d05-7f7d-42f0-8590-1d4f54bbba64" x="369" y="30" width="84" height="26"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Assignment
+Marks
+]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="09ac14e7-5f56-40be-897c-891b195bac89" x="453" y="30" width="31" height="26"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{hasAssignment}]]></textFieldExpression>
+			</textField>
 		</band>
 	</pageHeader>
 	<columnHeader>
 		<band height="1" splitType="Stretch"/>
 	</columnHeader>
 	<detail>
-		<band height="28" splitType="Stretch">
+		<band height="29" splitType="Stretch">
 			<textField>
 				<reportElement uuid="f5075eef-fcc0-46ec-b617-188aceaca328" x="1" y="0" width="57" height="28"/>
 				<box>
@@ -399,20 +398,6 @@ Total]]></text>
 				<textFieldExpression><![CDATA[$F{totalMarks}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="a17aa6f0-56d2-4ff5-8b06-4a0d479b2d9c" x="301" y="0" width="68" height="28"/>
-				<box>
-					<pen lineWidth="1.5"/>
-					<topPen lineWidth="1.5"/>
-					<leftPen lineWidth="1.5"/>
-					<bottomPen lineWidth="1.5"/>
-					<rightPen lineWidth="1.5"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="SansSerif"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{numberOfWorkingDays}]]></textFieldExpression>
-			</textField>
-			<textField>
 				<reportElement uuid="49ed2188-9a4e-417f-94a6-f50bda9e964b" x="369" y="0" width="70" height="28"/>
 				<box>
 					<pen lineWidth="1.5"/>
@@ -452,13 +437,25 @@ Total]]></text>
 				</textElement>
 				<text><![CDATA[]]></text>
 			</staticText>
+			<textField>
+				<reportElement uuid="1396395b-b6b3-4c13-b314-f2fa8ef948ad" x="301" y="0" width="68" height="28"/>
+				<box>
+					<pen lineWidth="1.5"/>
+					<topPen lineWidth="1.5"/>
+					<leftPen lineWidth="1.5"/>
+					<bottomPen lineWidth="1.5"/>
+					<rightPen lineWidth="1.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{assignment}]]></textFieldExpression>
+			</textField>
 		</band>
 	</detail>
 	<columnFooter>
 		<band splitType="Stretch"/>
 	</columnFooter>
 	<pageFooter>
-		<band height="22" splitType="Stretch">
+		<band height="25" splitType="Stretch">
 			<staticText>
 				<reportElement uuid="e88edda3-480a-4d50-aed8-d19d224937ac" x="188" y="1" width="233" height="20"/>
 				<textElement>
