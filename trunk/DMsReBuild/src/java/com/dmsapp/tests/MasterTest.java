@@ -25,24 +25,24 @@ public class MasterTest {
 
         Attendance attendance = attendanceService.findById("1", "BA", "1", "INDIAN HISTORY AND CULTURE 700AD");
 
-        if (attendance == null) {
-            attendance = new Attendance();
-            attendance.setYear("1");
-            attendance.setBranch("BA");
-            attendance.setSemister(1);
-            attendance.setPaper("INDIAN HISTORY AND CULTURE 700AD");
-            attendance.setNumberOfWorkingDays("40");
-            attendanceService.create(attendance);
-        } else {
-            LOG.debug("In Update");
-            attendance.setId(attendance.getId());
-            attendance.setYear("1");
-            attendance.setBranch("BA");
-            attendance.setSemister(1);
-            attendance.setPaper("INDIAN HISTORY AND CULTURE 700AD");
-            attendance.setNumberOfWorkingDays("0");
-            attendanceService.create(attendance);
-        }
+//        if (attendance == null) {
+//            attendance = new Attendance();
+//            attendance.setYear("1");
+//            attendance.setBranch("BA");
+//            attendance.setSemister("1");
+//            attendance.setPaper("INDIAN HISTORY AND CULTURE 700AD");
+//            attendance.setNumberOfWorkingDays("40");
+//            attendanceService.create(attendance);
+//        } else {
+//            LOG.debug("In Update");
+//            attendance.setId(attendance.getId());
+//            attendance.setYear("1");
+//            attendance.setBranch("BA");
+//            attendance.setSemister("1");
+//            attendance.setPaper("INDIAN HISTORY AND CULTURE 700AD");
+//            attendance.setNumberOfWorkingDays("0");
+//            attendanceService.create(attendance);
+//        }
 
         LOG.debug(attendance);
 
