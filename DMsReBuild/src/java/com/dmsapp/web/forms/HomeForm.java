@@ -13,7 +13,7 @@ public class HomeForm implements java.io.Serializable {
 
     private String year;
     private String branch;
-    private Integer semister;
+    private String semister;
     private String paper;
     private String papaerCode;
     private String internalType;
@@ -68,11 +68,11 @@ public class HomeForm implements java.io.Serializable {
         this.paper = paper;
     }
 
-    public Integer getSemister() {
+    public String getSemister() {
         return semister;
     }
 
-    public void setSemister(Integer semister) {
+    public void setSemister(String semister) {
         this.semister = semister;
     }
 
