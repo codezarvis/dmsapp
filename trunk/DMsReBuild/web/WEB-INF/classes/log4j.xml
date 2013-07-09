@@ -10,8 +10,8 @@
 	</appender>
 	
   <appender name="fileout" class="org.apache.log4j.RollingFileAppender">
-     <!--<param name="File" value="${catalina.home}/logs/dmslogs.log"/>-->
-     <param name="File" value="H:/logs/dmslogs.log"/>
+     <param name="File" value="${catalina.home}/logs/dmslogs.log"/>
+    <!-- <param name="File" value="F:/logs/dmslogs.log"/> -->
      <param name="Append" value="true"/>
      <param name="MaxFileSize" value="1000KB"/> 
      <param name="MaxBackupIndex" value="2"/>
