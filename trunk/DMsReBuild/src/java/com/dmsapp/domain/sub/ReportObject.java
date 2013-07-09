@@ -8,7 +8,7 @@ package com.dmsapp.domain.sub;
  *
  * @author Sudarsan
  */
-public class ReportObject implements java.io.Serializable{
+public class ReportObject implements java.io.Serializable {
 
     private String studentId;
     private String studentName;
@@ -25,6 +25,7 @@ public class ReportObject implements java.io.Serializable{
     private String semister;
     private String paper;
     private String paperCode;
+    private String hasAssignment;
 
     public String getAssignment() {
         return assignment;
@@ -56,6 +57,14 @@ public class ReportObject implements java.io.Serializable{
 
     public void setGrandTotal(String grandTotal) {
         this.grandTotal = grandTotal;
+    }
+
+    public String getHasAssignment() {
+        return hasAssignment;
+    }
+
+    public void setHasAssignment(String hasAssignment) {
+        this.hasAssignment = hasAssignment;
     }
 
     public String getInternalOne() {
@@ -146,44 +155,11 @@ public class ReportObject implements java.io.Serializable{
         this.year = year;
     }
 
+    @Override
     public String toString() {
-        StringBuilder toStringBuilder = new StringBuilder();
-        toStringBuilder.append(super.toString());
-        toStringBuilder.append("\n");
-        toStringBuilder.append("\nstudentId: ");
-        toStringBuilder.append(studentId);
-        toStringBuilder.append("\nstudentName: ");
-        toStringBuilder.append(studentName);
-        toStringBuilder.append("\ninternalOne: ");
-        toStringBuilder.append(internalOne);
-        toStringBuilder.append("\ninternalTwo: ");
-        toStringBuilder.append(internalTwo);
-        toStringBuilder.append("\nattendance: ");
-        toStringBuilder.append(attendance);
-        toStringBuilder.append("\nnumberOfWorkingDays: ");
-        toStringBuilder.append(numberOfWorkingDays);
-        toStringBuilder.append("\nnumberOfPresentedDays: ");
-        toStringBuilder.append(numberOfPresentedDays);
-        toStringBuilder.append("\nassignment: ");
-        toStringBuilder.append(assignment);
-        toStringBuilder.append("\ntotalMarks: ");
-        toStringBuilder.append(totalMarks);
-        toStringBuilder.append("\ngrandTotal: ");
-        toStringBuilder.append(grandTotal);
-        toStringBuilder.append("\nyear: ");
-        toStringBuilder.append(year);
-        toStringBuilder.append("\nbranch: ");
-        toStringBuilder.append(branch);
-        toStringBuilder.append("\nsemister: ");
-        toStringBuilder.append(semister);
-        toStringBuilder.append("\npaper: ");
-        toStringBuilder.append(paper);
-        toStringBuilder.append("\npaperCode: ");
-        toStringBuilder.append(paperCode);
-        return toStringBuilder.toString();
+        final String TAB = "    ";
+        StringBuilder retValue = new StringBuilder();
+        retValue.append("ReportObject ( ").append(super.toString()).append(TAB).append("studentId = ").append(this.studentId).append(TAB).append("studentName = ").append(this.studentName).append(TAB).append("internalOne = ").append(this.internalOne).append(TAB).append("internalTwo = ").append(this.internalTwo).append(TAB).append("attendance = ").append(this.attendance).append(TAB).append("numberOfWorkingDays = ").append(this.numberOfWorkingDays).append(TAB).append("numberOfPresentedDays = ").append(this.numberOfPresentedDays).append(TAB).append("assignment = ").append(this.assignment).append(TAB).append("totalMarks = ").append(this.totalMarks).append(TAB).append("grandTotal = ").append(this.grandTotal).append(TAB).append("year = ").append(this.year).append(TAB).append("branch = ").append(this.branch).append(TAB).append("semister = ").append(this.semister).append(TAB).append("paper = ").append(this.paper).append(TAB).append("paperCode = ").append(this.paperCode).append(TAB).append("hasAssignment = ").append(this.hasAssignment).append(" )");
+        return retValue.toString();
     }
-
-   
-    
-    
 }
