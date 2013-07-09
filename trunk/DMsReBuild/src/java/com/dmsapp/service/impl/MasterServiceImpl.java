@@ -29,7 +29,7 @@ public class MasterServiceImpl extends ServiceImpl implements MasterService{
     public static MasterService getInstance() {
         return masterServiceImpl;
     }
-    public List<Master> findBy(String year, String branch, Integer semister) {
+    public List<Master> findBy(String year, String branch, String semister) {
 
         Session session = HibernateUtils.currentSession();
         List<Master> masterList = null;
@@ -37,7 +37,7 @@ public class MasterServiceImpl extends ServiceImpl implements MasterService{
             Query query = session.createQuery("from Master master where master.year=:year and master.branch=:branch and master.semister=:semister");
             query.setParameter("year", year.trim());
             query.setParameter("branch", branch.trim());
-            query.setParameter("semister", semister);
+            query.setParameter("semister", semister.trim());
             masterList = query.list();
         }catch(Exception exception) {
             LOG.warn("MasterServiceImpl", exception);
@@ -73,7 +73,7 @@ public class MasterServiceImpl extends ServiceImpl implements MasterService{
             query.setParameter("paper", paper.trim());
             query.setParameter("year", year.trim());
             query.setParameter("branch", branch);
-            query.setParameter("semister", new Integer(sem));
+            query.setParameter("semister", sem.trim());
             master =(Master) query.uniqueResult();
         }catch(Exception exception){
             LOG.debug("MasterServiceImpl",exception);

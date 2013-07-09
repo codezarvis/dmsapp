@@ -4,8 +4,7 @@
  */
 package com.dmsapp.service.impl;
 
-import com.dmsapp.domain.sub.TypeOne;
-import com.dmsapp.domain.sub.TypeTwo;
+import com.dmsapp.domain.sub.MarksMaster;
 import com.dmsapp.domain.sub.UpdateObject;
 import com.dmsapp.service.UpdateMarksService;
 import com.dmsapp.utils.hibernate.HibernateUtils;
@@ -29,81 +28,34 @@ public class UpdateMarksServiceImpl extends ServiceImpl implements UpdateMarksSe
         return updateMarksServiceImpl;
     }
 
-    public UpdateObject findByStudentId(String studentId, String branch, String year, Integer semister, String paper, String internalType) {
+    public MarksMaster findByStudentId(String studentId, String branch, String year, String semister, String paper) {
 
-        LOG.debug(studentId + " " + year + " " + branch + " " + " " + semister + " " + paper + " " + internalType);
-        TypeOne typeOne = null;
-        TypeTwo typeTwo = null;
+        LOG.debug(studentId + " " + year + " " + branch + " " + " " + semister + " " + paper + " ");
         UpdateObject updateObject = null;
+        MarksMaster marksMaster = null;
         Session session = HibernateUtils.currentSession();
         try {
 
-            if ("1".equalsIgnoreCase(internalType)) {
-                LOG.debug("In One");
-                Query query = session.createQuery("from TypeOne typeOne where typeOne.studentId=:studentId and typeOne.year=:year and typeOne.branch=:branch and typeOne.semister=:semister and typeOne.paper=:paper and typeOne.internalType=:internalType");
-                query.setParameter("studentId", studentId);
-                query.setParameter("year", year);
-                query.setParameter("branch", branch);
-                query.setParameter("semister", new Integer(semister));
-                query.setParameter("paper", paper);
-                query.setParameter("internalType", internalType);
 
-                typeOne = (TypeOne) query.uniqueResult();
+            LOG.debug("In One");
+            Query query = session.createQuery("from MarksMaster marksMaster where marksMaster.studentId=:studentId and marksMaster.year=:year and marksMaster.branch=:branch and marksMaster.semister=:semister and marksMaster.paper=:paper");
+            query.setParameter("studentId", studentId.trim());
+            query.setParameter("year", year.trim());
+            query.setParameter("branch", branch.trim());
+            query.setParameter("semister", semister.trim());
+            query.setParameter("paper", paper.trim());
 
-                if (typeOne != null) {
-                    LOG.debug("Type One : " + typeOne);
-                    updateObject = new UpdateObject();
-                    updateObject.setId(typeOne.getId());
-                    updateObject.setStudentId(typeOne.getStudentId());
-                    updateObject.setFirstName(typeOne.getFirstName());
-                    updateObject.setSurName(typeOne.getSurName());
-                    updateObject.setYear(typeOne.getYear());
-                    updateObject.setBranch(typeOne.getBranch());
-                    updateObject.setSemister(String.valueOf(typeOne.getSemister()));
-                    updateObject.setInternalType(typeOne.getInternalType());
-                    updateObject.setPaper(typeOne.getPaper());
-                    updateObject.setMarks(typeOne.getInterOneMarks());
-                    updateObject.setAssignmentMarks(typeOne.getAssignmentMarks());
-                    updateObject.setActive(typeOne.getActive());
-                }
+            marksMaster = (MarksMaster) query.uniqueResult();
 
 
-            } else if ("2".equalsIgnoreCase(internalType)) {
-                LOG.debug("In Two");
-                Query query = session.createQuery("from TypeTwo typeTwo where typeTwo.studentId=:studentId and typeTwo.branch=:branch and typeTwo.year=:year and typeTwo.semister=:semister and typeTwo.paper=:paper and typeTwo.internalType=:internalType");
-                query.setParameter("studentId", studentId);
-                query.setParameter("branch", branch);
-                query.setParameter("year", year);
-                query.setParameter("semister", new Integer(semister));
-                query.setParameter("paper", paper);
-                query.setParameter("internalType", internalType);
 
-                typeTwo = (TypeTwo) query.uniqueResult();
 
-                if (typeTwo != null) {
-                    updateObject = new UpdateObject();
-                    updateObject.setId(typeTwo.getId());
-                    updateObject.setStudentId(typeTwo.getStudentId());
-                    updateObject.setFirstName(typeTwo.getFirstName());
-                    updateObject.setSurName(typeTwo.getSurName());
-                    updateObject.setYear(typeTwo.getYear());
-                    updateObject.setBranch(typeTwo.getBranch());
-                    updateObject.setSemister(String.valueOf(typeTwo.getSemister()));
-                    updateObject.setInternalType(typeTwo.getInternalType());
-                    updateObject.setPaper(typeTwo.getPaper());
-                    updateObject.setMarks(typeTwo.getInterTwoMarks());
-                    updateObject.setAssignmentMarks(typeTwo.getAssignmentMarks());
-                    updateObject.setAttendanceMarks(typeTwo.getAttendanceMarks());
-                    updateObject.setActive(typeTwo.getActive());
-                }
-
-            }
 
         } catch (Exception exception) {
             LOG.debug("UpdateMarksServiceImpl", exception);
         } finally {
             HibernateUtils.closeSession();
         }
-        return updateObject;
+        return marksMaster;
     }
 }

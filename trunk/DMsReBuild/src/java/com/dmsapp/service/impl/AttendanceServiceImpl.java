@@ -50,15 +50,18 @@ public class AttendanceServiceImpl extends ServiceImpl implements AttendanceServ
     }
 
     public Attendance findById(String year, String branch, String semsiter, String paper) {
+
+        LOG.debug("====Year"+year+" Branch"+branch+" Sem"+semsiter+" Paper"+paper);
         Attendance attendance = null;
         Session session = HibernateUtils.currentSession();
         try {
             Query query = session.createQuery("from Attendance attendance where attendance.branch=:branch and attendance.year=:year and attendance.semister=:semister and attendance.paper=:paper");
             query.setParameter("branch", branch.trim());
             query.setParameter("year", year.trim());
-            query.setParameter("semister", new Integer(semsiter));
+            query.setParameter("semister", semsiter.trim());
             query.setParameter("paper", paper.trim());
             attendance = (Attendance) query.uniqueResult();
+            LOG.debug("Attendance Object in Service ======"+attendance);
         }catch(Exception exception) {
             LOG.debug("AttendanceServiceImpl",exception);
         }finally {
