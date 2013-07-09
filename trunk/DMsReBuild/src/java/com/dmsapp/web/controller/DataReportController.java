@@ -6,14 +6,11 @@ package com.dmsapp.web.controller;
 
 import com.dmsapp.domain.sub.Attendance;
 import com.dmsapp.domain.sub.Branch;
+import com.dmsapp.domain.sub.MarksMaster;
 import com.dmsapp.domain.sub.ReportObject;
-import com.dmsapp.domain.sub.TypeOne;
-import com.dmsapp.domain.sub.TypeTwo;
 import com.dmsapp.service.AttendanceService;
 import com.dmsapp.service.BranchService;
 import com.dmsapp.service.MasterService;
-import com.dmsapp.service.TypeOneService;
-import com.dmsapp.service.TypeTwoService;
 import com.dmsapp.utils.service.ServiceUtils;
 import com.dmsapp.web.forms.HomeForm;
 import java.io.ByteArrayOutputStream;
@@ -46,16 +43,14 @@ import org.springframework.web.context.request.WebRequest;
  * @author Sudarsan
  */
 @Controller
-@RequestMapping("/reports")
-public class ReportsController {
+@RequestMapping("/report")
+public class DataReportController {
 
-    private static Logger LOG = Logger.getLogger(ReportsController.class);
+    private static Logger LOG = Logger.getLogger(DataReportController.class);
 
     @RequestMapping(method = RequestMethod.GET)
-    
-    public String showReportsPage(@ModelAttribute HomeForm homeForm, WebRequest request, Model model) {
+    public String showReportParams(@ModelAttribute HomeForm homeForm, Model model, WebRequest request) {
 
-        LOG.debug("Paper Code : " + homeForm.getPapaerCode());
         List<Branch> branchList = null;
         try {
             BranchService branchService = ServiceUtils.getBranchService();
@@ -67,17 +62,16 @@ public class ReportsController {
         model.addAttribute(new HomeForm());
         LOG.debug("Branch List : " + branchList);
         request.setAttribute("branchList", branchList, WebRequest.SCOPE_SESSION);
-
-        return "/reportsHome";
+        return "/report";
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public String showReport(@ModelAttribute HomeForm homeForm, HttpServletRequest request, HttpServletResponse response, WebRequest webRequest) {
-        //LOG.debug("Home Form : " + homeForm);
-        //LOG.debug("======================================\n");
+    public String genarateReport(@ModelAttribute HomeForm homeForm, WebRequest webRequest, HttpServletRequest request, HttpServletResponse response) {
+
+        MasterService masterService = ServiceUtils.getMasterService();
 
         String errorResponse = null;
-
+        LOG.debug(homeForm);
         String branchName = null;
         if ("1".equalsIgnoreCase(homeForm.getBranch())) {
             branchName = "BA";
@@ -106,90 +100,69 @@ public class ReportsController {
         }
 
 
-        MasterService masterService = ServiceUtils.getMasterService();
 
         AttendanceService attendanceService = ServiceUtils.getAttendanceService();
         LOG.debug("Branch Name : " + branchName.trim() + "Year : " + homeForm.getYear() + "Sem : " + homeForm.getSemister() + " paper :" + homeForm.getPaper());
-        Attendance attendance = attendanceService.findById(homeForm.getYear().trim(), branchName.trim(), String.valueOf(homeForm.getSemister()).trim(), homeForm.getPaper().trim());
+        Attendance attendance = attendanceService.findById(homeForm.getYear().trim(), branchName.trim(), homeForm.getSemister().trim(), homeForm.getPaper().trim());
 
-        LOG.debug("Atten dance : " + attendance);
+        if (attendance == null) {
+            // TO DO for Attendance is Not Posted.
+        }
+
 
         Integer numberOfWorkingDays = Integer.parseInt(attendance.getNumberOfWorkingDays());
-        LOG.debug("No.Working Days :" + numberOfWorkingDays);
 
         if (numberOfWorkingDays == 0) {
             errorResponse = "Working Hours are Not Posted or Marks are Not Posted for this Request.";
             webRequest.setAttribute("errorResponse", errorResponse, WebRequest.SCOPE_REQUEST);
-            LOG.debug("Number of Working days are Not defined for this Request");
-            return "/reportsHome";
+            return "/report";
         }
 
-        TypeOneService typeOneService = ServiceUtils.getTypeOneService();
-        List<TypeOne> typeOneList = typeOneService.getMarks(homeForm.getYear().trim(), branchName.trim(), String.valueOf(homeForm.getSemister()).trim(), homeForm.getPaper().trim());
 
-        TypeTwoService typeTwoService = ServiceUtils.getTypeTwoService();
-        List<TypeTwo> typeTwoList = typeTwoService.getMarks(homeForm.getYear().trim(), branchName.trim(), String.valueOf(homeForm.getSemister()).trim(), homeForm.getPaper().trim());
+        List<MarksMaster> marksList = ServiceUtils.getMarksMasterService().getMarks(homeForm.getYear(), branchName, homeForm.getSemister(), homeForm.getPaper());
 
-        LOG.debug("Type One Marks :" + typeOneList.size() + "Type Two Marks : " + typeOneList.size() + "\n");
 
-        if (typeOneList.size() == 0 || typeTwoList.size() == 0) {
+        if (marksList.size() == 0) {
             errorResponse = "Working Hours are Not Posted or Marks are Not Posted for this Request.";
-            LOG.debug("Type One Marks :" + typeOneList.size() + "Type Two Marks : " + typeOneList.size() + "\n");
-            LOG.debug("Report Can't be genarated, Since Marks are Not Posted");
             webRequest.setAttribute("errorResponse", errorResponse, WebRequest.SCOPE_REQUEST);
-            return "/reportsHome";
+            return "/report";
         }
-
 
         List<String> typeOneMarks = new ArrayList<String>();
         List<String> typeTwoMarks = new ArrayList<String>();
-
         List<String> internalSum = new ArrayList<String>();
-
-        List<String> names = new ArrayList<String>();
         List<String> studentIds = new ArrayList<String>();
         List<String> attendanceMarks = new ArrayList<String>();
         List<String> assignMenteMarks1 = new ArrayList<String>();
-        List<String> assignMenteMarks2 = new ArrayList<String>();
         List<String> absentList = new ArrayList<String>();
 
         String year = null;
         String branch = null;
         String semister = null;
         String paper = null;
+        String assignment = null;
+        String paperCode = masterService.findByPaperName(homeForm.getPaper().trim(), homeForm.getYear().trim(), branchName.trim(), homeForm.getSemister()).getPaperCode();
 
-        LOG.debug("============================" + homeForm.getYear());
-        String paperCode = masterService.findByPaperName(homeForm.getPaper().trim(), homeForm.getYear().trim(), branchName.trim(), String.valueOf(homeForm.getSemister())).getPaperCode();
 
-        List<ReportObject> reportObjects = new ArrayList<ReportObject>();
-
-        TypeOne util = typeOneList.get(0);
+        MarksMaster util = marksList.get(0);
         year = util.getYear();
         branch = util.getBranch();
         semister = String.valueOf(util.getSemister());
         paper = util.getPaper();
+        assignment = util.getAssignmentMarks();
 
-        for (TypeOne typeOne : typeOneList) {
-
-            typeOneMarks.add(typeOne.getInterOneMarks());
-
-            names.add(typeOne.getSurName() + " " + typeOne.getFirstName());
+        for (MarksMaster typeOne : marksList) {
+            typeOneMarks.add(typeOne.getInternalOne());
             studentIds.add(typeOne.getStudentId());
             assignMenteMarks1.add(typeOne.getAssignmentMarks());
         }
 
-        for (TypeTwo typeTwo : typeTwoList) {
+        for (MarksMaster typeTwo : marksList) {
             attendanceMarks.add(typeTwo.getAttendanceMarks());
-
-            typeTwoMarks.add(typeTwo.getInterTwoMarks());
-            assignMenteMarks2.add(typeTwo.getAssignmentMarks());
+            typeTwoMarks.add(typeTwo.getInternalTwo());
+            //assignMenteMarks2.add(typeTwo.getAssignmentMarks());
 
         }
-
-        LOG.debug("Assignment Marks I : " + assignMenteMarks1 + " " + "Assignment Marks II : " + assignMenteMarks2);
-
-
-        LOG.debug("Size of Type One :" + typeOneMarks.size() + " Size of Type Two : " + typeTwoMarks.size());
 
         for (int i = 0; i < typeTwoMarks.size(); i++) {
 
@@ -204,16 +177,13 @@ public class ReportsController {
         }
 
 
-        LOG.debug("Internal Sum List : " + internalSum);
-        LOG.debug("Abset List : " + absentList);
 
-
-        // Report Genaration
+        List<ReportObject> reportObjects = new ArrayList<ReportObject>();
 
         for (int i = 0; i < internalSum.size() + absentList.size(); i++) {
             ReportObject reportObject = new ReportObject();
             reportObject.setStudentId(studentIds.get(i));
-            reportObject.setStudentName(names.get(i));
+            //reportObject.setStudentName(names.get(i));
 
             LOG.debug(attendanceMarks.get(i));
             Integer percentage = (100 * Integer.parseInt(attendanceMarks.get(i))) / (numberOfWorkingDays);
@@ -233,12 +203,17 @@ public class ReportsController {
                 attMarks = 0;
             }
 
-            LOG.debug("No.Days : " + attendanceMarks.get(i) + "Att Marks : " + attMarks + "Per :" + percentage);
 
             reportObject.setNumberOfPresentedDays(String.valueOf(numberOfWorkingDays));
             reportObject.setNumberOfWorkingDays(attendanceMarks.get(i));
             reportObject.setAttendance(String.valueOf(attMarks));
-            reportObject.setAssignment(String.valueOf(Integer.parseInt(assignMenteMarks1.get(i)) + Integer.parseInt(assignMenteMarks2.get(i))));
+
+            if (assignMenteMarks1.get(i) != null) {
+                reportObject.setAssignment(String.valueOf(Integer.parseInt(assignMenteMarks1.get(i))));
+            } else {
+                reportObject.setAssignment("NA");
+            }
+
 
             if (typeOneMarks.get(i).equalsIgnoreCase("A") || typeTwoMarks.get(i).equalsIgnoreCase("A")) {
                 // Absent List
@@ -247,16 +222,70 @@ public class ReportsController {
 
                 if (typeOneMarks.get(i).equalsIgnoreCase("A") && typeTwoMarks.get(i).equalsIgnoreCase("A")) {
                     reportObject.setTotalMarks(0);
-                    //reportObject.setGrandTotal(String.valueOf(Integer.parseInt(typeOneMarks.get(i)) + Integer.parseInt(reportObject.getAttendance())));
-                    reportObject.setGrandTotal("NA");
+
+                    LOG.debug("===========Both A and A"+assignMenteMarks1.get(i) + "\t"+reportObject.getAttendance());
+                    if(assignMenteMarks1.get(i) == null) {
+                        reportObject.setGrandTotal(String.valueOf(Integer.parseInt(reportObject.getAttendance())));
+                    }else {
+                        reportObject.setGrandTotal(String.valueOf(Integer.parseInt(assignMenteMarks1.get(i)) + Integer.parseInt(reportObject.getAttendance())));
+                    }
+                    //reportObject.setGrandTotal(String.valueOf(Integer.parseInt(assignMenteMarks1.get(i)) + Integer.parseInt(reportObject.getAttendance())));
+                    //reportObject.setGrandTotal("NA");
                 }
 
                 if (!typeOneMarks.get(i).equalsIgnoreCase("A")) {
+
+                    if (typeOneMarks.get(i).equals("A")) {
+                        LOG.debug("In Absent =============");
+
+                    } else {
+                        LOG.debug("Total Marks : ==========" + Integer.parseInt(typeOneMarks.get(i)) / 2);
+                    }
+
+
                     reportObject.setTotalMarks(Integer.parseInt(typeOneMarks.get(i)) / 2);
-                    reportObject.setGrandTotal(String.valueOf(Integer.parseInt(typeOneMarks.get(i)) / 2 + Integer.parseInt(reportObject.getAttendance())));
+
+
+                    if (assignMenteMarks1.get(i) != null) {
+                        int tot = (Integer.parseInt(typeOneMarks.get(i)) / 2) + Integer.parseInt(reportObject.getAttendance()) + Integer.parseInt(assignMenteMarks1.get(i));
+                        LOG.debug(typeOneMarks.get(i) + "===========" + assignMenteMarks1.get(i) + "=============" + attendanceMarks.get(i) + "===============TOT : " + tot);
+                        reportObject.setGrandTotal(String.valueOf(tot));
+
+                    } else {
+                        int tot = (Integer.parseInt(typeOneMarks.get(i)) / 2) + Integer.parseInt(reportObject.getAttendance());
+                        //LOG.debug(typeOneMarks.get(i) + "===========" + assignMenteMarks1.get(i) + "=============" + attendanceMarks.get(i) + "===============TOT : " + tot);
+                        reportObject.setGrandTotal(String.valueOf(tot));
+
+                    }
+
+
                 } else if (!typeTwoMarks.get(i).equalsIgnoreCase("A")) {
+
+                    if (typeOneMarks.get(i).equals("A")) {
+                        LOG.debug("In Absent =============");
+                    } else {
+                        LOG.debug("Total Marks : ==========" + Integer.parseInt(typeOneMarks.get(i)) / 2);
+                    }
+
+
                     reportObject.setTotalMarks(Integer.parseInt(typeTwoMarks.get(i)) / 2);
-                    reportObject.setGrandTotal(String.valueOf(Integer.parseInt(typeTwoMarks.get(i)) / 2 + Integer.parseInt(reportObject.getAttendance())));
+                    //
+                    //reportObject.setGrandTotal(String.valueOf(Integer.parseInt(typeTwoMarks.get(i)) / 2) + Integer.parseInt(reportObject.getAttendance()) + Integer.parseInt(attendanceMarks.get(i)));
+                    //reportObject.setGrandTotal(String.valueOf(reportObject.getTotalMarks() / 2) + Integer.parseInt(reportObject.getAttendance()) + Integer.parseInt(attendanceMarks.get(i)));
+
+
+                    LOG.debug(typeTwoMarks.get(i) + "===========Attendance :" + reportObject.getAttendance() + "============= Assignments:" + assignMenteMarks1.get(i));
+                    if (assignMenteMarks1.get(i) != null) {
+                        int tot = (Integer.parseInt(typeTwoMarks.get(i)) / 2) + Integer.parseInt(reportObject.getAttendance()) + Integer.parseInt(assignMenteMarks1.get(i));
+                        LOG.debug(typeTwoMarks.get(i) + "===========" + reportObject.getAttendance() + "=============" + assignMenteMarks1.get(i) + "===============TOT : " + tot);
+                        reportObject.setGrandTotal(String.valueOf(tot));
+
+                    } else {
+                        int tot = (Integer.parseInt(typeTwoMarks.get(i)) / 2) + Integer.parseInt(reportObject.getAttendance());
+                        //LOG.debug(typeTwoMarks.get(i) + "===========" + reportObject.getAttendance() + "=============" + assignMenteMarks1.get(i) + "===============TOT : " + tot);
+                        reportObject.setGrandTotal(String.valueOf(tot));
+                    }
+
 
                 }
 
@@ -270,7 +299,11 @@ public class ReportsController {
                 Integer grandTotal = totalMarks + Integer.parseInt(reportObject.getAttendance());
 
                 reportObject.setGrandTotal(String.valueOf(grandTotal));
-                reportObject.setGrandTotal(String.valueOf(reportObject.getTotalMarks() + Integer.parseInt(reportObject.getAttendance())));
+
+                if (assignMenteMarks1.get(i) != null) {
+                    reportObject.setGrandTotal(String.valueOf(reportObject.getTotalMarks() + Integer.parseInt(reportObject.getAttendance()) + Integer.parseInt(assignMenteMarks1.get(i))));
+                }
+
             }
 
 
@@ -280,28 +313,38 @@ public class ReportsController {
             reportObject.setPaper(paper);
             reportObject.setPaperCode(paperCode);
 
+            if (assignment == null) {
+                LOG.debug("In Assignment ================Check");
+
+                reportObject.setAssignment("NA");
+                reportObject.setHasAssignment("NA");
+            } else {
+                //reportObject.setAssignment("5");
+                reportObject.setHasAssignment("5");
+            }
+
+
             reportObjects.add(reportObject);
 
-            LOG.debug("Internal Count : " + i);
         }
 
         LOG.debug(reportObjects);
 
-        LOG.debug(reportObjects);
 
         response.setContentType("application/pdf");
         ServletOutputStream servletOutputStream = null;
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         InputStream inputStream = null;
-        
+
         inputStream = request.getSession().getServletContext().getResourceAsStream("/WEB-INF/report.jrxml");
         try {
             servletOutputStream = response.getOutputStream();
-            LOG.debug("Available  : " + inputStream.available());
         } catch (Exception exception) {
             exception.printStackTrace();
         }
 
+
+        // Report Code
 
 
         try {
@@ -317,8 +360,7 @@ public class ReportsController {
             byteArrayOutputStream.writeTo(servletOutputStream);
 
             inputStream.close();
-        
-            LOG.debug("Done Report to Pdf");
+
         } catch (Exception exception) {
             LOG.debug("ReportsController", exception);
         } finally {
@@ -348,5 +390,6 @@ public class ReportsController {
 
         }
         return "";
+
     }
 }
