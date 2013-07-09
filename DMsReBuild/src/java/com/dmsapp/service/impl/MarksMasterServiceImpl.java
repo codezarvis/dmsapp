@@ -78,7 +78,7 @@ public class MarksMasterServiceImpl extends ServiceImpl implements MarksMasterSe
             query.setParameter("studentId", studentId.trim());
             query.setParameter("branch", branch.trim());
             query.setParameter("year", year.trim());
-            query.setParameter("semister", new Integer(semister));
+            query.setParameter("semister", semister.trim());
             query.setParameter("paper", paper.trim());
             marksMaster = (MarksMaster) query.uniqueResult();
         } catch (Exception exception) {
@@ -96,7 +96,7 @@ public class MarksMasterServiceImpl extends ServiceImpl implements MarksMasterSe
             Query query = session.createQuery("from MarksMaster marksMaster where marksMaster.year=:year and marksMaster.branch=:branch and marksMaster.semister=:semister and marksMaster.paper=:paper");
             query.setParameter("year", year.trim());
             query.setParameter("branch", branch.trim());
-            query.setParameter("semister", new Integer(semister));
+            query.setParameter("semister", semister.trim());
             query.setParameter("paper", paper.trim());
             marksList = query.list();
 
