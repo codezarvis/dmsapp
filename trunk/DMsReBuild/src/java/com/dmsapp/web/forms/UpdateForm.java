@@ -24,6 +24,8 @@ public class UpdateForm implements java.io.Serializable{
     private String paper;
     private String internalType;
     private Integer active;
+    private String internalOne;
+    private String internalTwo;
 
     public Integer getActive() {
         return active;
@@ -71,6 +73,22 @@ public class UpdateForm implements java.io.Serializable{
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getInternalOne() {
+        return internalOne;
+    }
+
+    public void setInternalOne(String internalOne) {
+        this.internalOne = internalOne;
+    }
+
+    public String getInternalTwo() {
+        return internalTwo;
+    }
+
+    public void setInternalTwo(String internalTwo) {
+        this.internalTwo = internalTwo;
     }
 
     public String getInternalType() {
@@ -137,39 +155,13 @@ public class UpdateForm implements java.io.Serializable{
         this.year = year;
     }
 
+    @Override
     public String toString() {
-        StringBuilder toStringBuilder = new StringBuilder();
-        toStringBuilder.append(super.toString());
-        toStringBuilder.append("\n");
-        toStringBuilder.append("\nid: ");
-        toStringBuilder.append(id);
-        toStringBuilder.append("\nstudentId: ");
-        toStringBuilder.append(studentId);
-        toStringBuilder.append("\nsurName: ");
-        toStringBuilder.append(surName);
-        toStringBuilder.append("\nfirstName: ");
-        toStringBuilder.append(firstName);
-        toStringBuilder.append("\nmarks: ");
-        toStringBuilder.append(marks);
-        toStringBuilder.append("\nassignmentMarks: ");
-        toStringBuilder.append(assignmentMarks);
-        toStringBuilder.append("\nattendanceMarks: ");
-        toStringBuilder.append(attendanceMarks);
-        toStringBuilder.append("\nrating: ");
-        toStringBuilder.append(rating);
-        toStringBuilder.append("\nyear: ");
-        toStringBuilder.append(year);
-        toStringBuilder.append("\nbranch: ");
-        toStringBuilder.append(branch);
-        toStringBuilder.append("\nsemister: ");
-        toStringBuilder.append(semister);
-        toStringBuilder.append("\npaper: ");
-        toStringBuilder.append(paper);
-        toStringBuilder.append("\ninternalType: ");
-        toStringBuilder.append(internalType);
-        toStringBuilder.append("\nactive: ");
-        toStringBuilder.append(active);
-        return toStringBuilder.toString();
+        final String TAB = "    ";
+        StringBuilder retValue = new StringBuilder();
+        retValue.append("UpdateForm ( ").append(super.toString()).append(TAB).append("id = ").append(this.id).append(TAB).append("studentId = ").append(this.studentId).append(TAB).append("surName = ").append(this.surName).append(TAB).append("firstName = ").append(this.firstName).append(TAB).append("marks = ").append(this.marks).append(TAB).append("assignmentMarks = ").append(this.assignmentMarks).append(TAB).append("attendanceMarks = ").append(this.attendanceMarks).append(TAB).append("rating = ").append(this.rating).append(TAB).append("year = ").append(this.year).append(TAB).append("branch = ").append(this.branch).append(TAB).append("semister = ").append(this.semister).append(TAB).append("paper = ").append(this.paper).append(TAB).append("internalType = ").append(this.internalType).append(TAB).append("active = ").append(this.active).append(TAB).append("internalOne = ").append(this.internalOne).append(TAB).append("internalTwo = ").append(this.internalTwo).append(" )");
+        return retValue.toString();
     }
+
     
 }
