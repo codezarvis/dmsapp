@@ -33,7 +33,7 @@
                     var internalTwo = $('#internalTwo').val();
                     var assignmentMarks = $('#assignmentMarks').val();
                     var hasMarks = $('#hasMarks').val();
-
+                    var attendanceMarks = $('#attendanceMarks').val();
 
                     if(studentId == null || studentId.length == 0) {
                         alert('Registration Number is required !');
@@ -47,6 +47,11 @@
 
                     if(internalTwo == null || internalTwo.length == 0) {
                         alert('Internal Marks - II are required !');
+                        return false;
+                    }
+
+                    if(attendanceMarks == null || attendanceMarks.length == 0) {
+                        alert('Working Days are required !');
                         return false;
                     }
 
@@ -164,6 +169,14 @@ Check the Box to Marks Student as Absent
                         <div>
                             <sf:input path ="internalTwo" id="internalTwo" name="Field211" type="text" class="field text small" value="" maxlength="255" tabindex="4" onkeyup="" />
                         </div>
+                    </li><li id="foli211" class="notranslate      ">
+                        <label class="desc" id="title211" for="Field211">
+                            Number of Days.Attended
+                            <span id="req_211" class="req">*</span>
+                        </label>
+                        <div>
+                            <sf:input path ="attendanceMarks" id="attendanceMarks" name="Field211" type="text" class="field text small" value="" maxlength="255" tabindex="4" onkeyup="" />
+                        </div>
                     </li>
 
                     <c:if test="${master.hasAssMarks == 1}">
@@ -194,6 +207,12 @@ Check the Box to Marks Student as Absent
                     </li>
                 </ul>
             </sf:form>
+
+             <div style="position:relative;height:40px;">
+                 <center>
+                     <a href="${pageContext.request.contextPath}/params" class="powertiny">Cancel</a>
+                 </center>
+             </div>
 
         </div><!--container-->
 

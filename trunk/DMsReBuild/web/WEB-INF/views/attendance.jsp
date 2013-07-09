@@ -25,6 +25,37 @@
         <script type="text/javascript">
          $(document).ready(function(){
 
+
+            $("#saveForm").click(function(){
+
+                    var year = $("#year").val();
+                    var semValue = $("#semValue").val();
+                    var branch = $("#branch").val();
+                    var paper = $("#paper").val();
+
+                    console.debug(year+' '+semValue+' '+branch+' '+paper);
+
+                    if(year == 0 || year == null || semValue == 0 || semValue == null || branch == 0 || branch == null || paper == 0 || paper == null) {
+                        alert('Inavalid Selection');
+                        return false;
+                    }
+
+                    $.ajax({
+
+                        type:'POST',
+                        url:'${pageContext.request.contextPath}/attendance',
+                        data:$('#sleectionForPost').serialize(),
+                        success:function(response) {
+                            alert(response);
+                        }
+
+                    });
+
+                });
+
+
+
+
                 $("#sleectionForPost").submit(function(){
                     var year = $("#year").val();
                     var semValue = $("#semValue").val();
@@ -94,7 +125,7 @@
         </script>
 
 
-        
+
     </head>
 
     <body id="public">
@@ -108,7 +139,7 @@
 
                 <header id="header" class="info">
                     <h2>Select Year, Branch, Semister & Branch.</h2>
-                    <div>Click Submit to Post Internal Marks.</div>
+                    <div>Click Post to Enter Class Work.</div>
                 </header>
 
                 <ul>
@@ -125,7 +156,7 @@
                                 <sf:option value="1" >Year - I</sf:option>
                                 <sf:option value="2" >Year - II</sf:option>
                                 <sf:option value="3" >Year - III</sf:option>
-                                
+
                             </sf:select>
                         </div>
                     </li>
@@ -146,8 +177,8 @@
                                     %>
                                 </c:forEach>
                             </sf:select>
-                                
-                            
+
+
                         </div>
                     </li>
                     <li id="foli6" class="notranslate       ">
@@ -157,8 +188,8 @@
                         </label>
                         <div>
                             <sf:select id="semValue" name="Field6" cssClass="field select medium" tabindex="3" path="semister" >
-                               
-                               
+
+
                             </sf:select>
                         </div>
                     </li>
@@ -169,41 +200,26 @@
                         </label>
                         <div>
                             <sf:select id="paper" name="Field7" cssClass="field select medium" tabindex="4" path="paper" >
-                               
-                                
+
+
                             </sf:select>
                         </div>
-                    </li><li id="foli110" class="notranslate section      ">
-                        <section>
-                            <h3 id="title110">
-                                Assignment Marks.
-                            </h3>
-                            <div id="instruct110">Check the Box to Enter Assignment Marks.</div>
-                        </section>
-                    </li><li id="foli111" class="notranslate      ">
-                        <fieldset>
-                            <![if !IE | (gte IE 8)]>
-                            <legend id="title111" class="desc">
-                            </legend>
-                            <![endif]>
-                            <!--[if lt IE 8]>
-<label id="title111" class="desc">
-</label>
-                            <![endif]-->
-                            <div>
-                                <span>
-                                    <sf:checkbox id="Field111" name="Field111" type="checkbox" class="field checkbox" value="1" tabindex="5" path="hasAssMarks" />
-                                    <label class="choice" for="Field111">Has Assignment Marks ?</label>
-                                </span>
-                            </div>
-                        </fieldset>
+                    </li>
+                    <li id="foli106" class="notranslate      ">
+                        <label class="desc" id="title106" for="Field106">
+                            Number of Working Days.
+                            <span id="req_106" class="req">*</span>
+                        </label>
+                        <div>
+                            <sf:input id="numberOfWorkingDays" name="Field106" path="numberOfWorkingDays" type="text" class="field text small" value="" maxlength="255" tabindex="2" onkeyup="" />
+                        </div>
                     </li>
 
                     <li class="buttons ">
                         <div>
 
-                            <input id="" name="saveForm" class="btTxt"
-                                   type="submit" value="Submit"
+                            <input id="saveForm" name="saveForm" class="btTxt"
+                                   type="button" value="POST"
                                /></div>
                     </li>
 
@@ -217,7 +233,7 @@
 
              <div style="position:relative;height:40px;">
                  <center>
-                     <a href="${pageContext.request.contextPath}/home" class="powertiny">Cancel</a>
+                     <a href="${pageContext.request.contextPath}/home">Cancel</a>
                  </center>
              </div>
 
@@ -226,7 +242,7 @@
 
         <a class="powertiny" href="#" title="Powered by "
            style="display:block !important;visibility:visible !important;text-indent:0 !important;position:relative !important;height:auto !important;width:95px !important;overflow:visible !important;text-decoration:none;cursor:pointer !important;margin:0 auto !important">
-            
+
             <b style="display:block !important;visibility:visible !important;text-indent:0 !important;position:static !important;height:auto !important;width:auto !important;overflow: auto !important;font-weight:normal;font-size:9px;color:#777;padding:0 0 0 3px;">Designed</b>
         </a>
     </body>
