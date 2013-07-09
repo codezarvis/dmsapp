@@ -17,7 +17,7 @@
         <property column="attendance" name="attendanceMarks" type="java.lang.String" />
         <property column="year" name="year" type="java.lang.String" />
         <property column="branch" name="branch" type="java.lang.String" />
-        <property column="semister" name="semister" type="java.lang.Integer" />
+        <property column="semister" name="semister" type="java.lang.String" />
         <property column="paper" name="paper" type="java.lang.String" />
         <property column="active" name="active" type="java.lang.Integer" />
 
