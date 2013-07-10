@@ -26,6 +26,7 @@ public class ReportObject implements java.io.Serializable {
     private String paper;
     private String paperCode;
     private String hasAssignment;
+    private String howMany;
 
     public String getAssignment() {
         return assignment;
@@ -65,6 +66,14 @@ public class ReportObject implements java.io.Serializable {
 
     public void setHasAssignment(String hasAssignment) {
         this.hasAssignment = hasAssignment;
+    }
+
+    public String getHowMany() {
+        return howMany;
+    }
+
+    public void setHowMany(String howMany) {
+        this.howMany = howMany;
     }
 
     public String getInternalOne() {
@@ -159,7 +168,9 @@ public class ReportObject implements java.io.Serializable {
     public String toString() {
         final String TAB = "    ";
         StringBuilder retValue = new StringBuilder();
-        retValue.append("ReportObject ( ").append(super.toString()).append(TAB).append("studentId = ").append(this.studentId).append(TAB).append("studentName = ").append(this.studentName).append(TAB).append("internalOne = ").append(this.internalOne).append(TAB).append("internalTwo = ").append(this.internalTwo).append(TAB).append("attendance = ").append(this.attendance).append(TAB).append("numberOfWorkingDays = ").append(this.numberOfWorkingDays).append(TAB).append("numberOfPresentedDays = ").append(this.numberOfPresentedDays).append(TAB).append("assignment = ").append(this.assignment).append(TAB).append("totalMarks = ").append(this.totalMarks).append(TAB).append("grandTotal = ").append(this.grandTotal).append(TAB).append("year = ").append(this.year).append(TAB).append("branch = ").append(this.branch).append(TAB).append("semister = ").append(this.semister).append(TAB).append("paper = ").append(this.paper).append(TAB).append("paperCode = ").append(this.paperCode).append(TAB).append("hasAssignment = ").append(this.hasAssignment).append(" )");
+        retValue.append("ReportObject ( ").append(super.toString()).append(TAB).append("studentId = ").append(this.studentId).append(TAB).append("studentName = ").append(this.studentName).append(TAB).append("internalOne = ").append(this.internalOne).append(TAB).append("internalTwo = ").append(this.internalTwo).append(TAB).append("attendance = ").append(this.attendance).append(TAB).append("numberOfWorkingDays = ").append(this.numberOfWorkingDays).append(TAB).append("numberOfPresentedDays = ").append(this.numberOfPresentedDays).append(TAB).append("assignment = ").append(this.assignment).append(TAB).append("totalMarks = ").append(this.totalMarks).append(TAB).append("grandTotal = ").append(this.grandTotal).append(TAB).append("year = ").append(this.year).append(TAB).append("branch = ").append(this.branch).append(TAB).append("semister = ").append(this.semister).append(TAB).append("paper = ").append(this.paper).append(TAB).append("paperCode = ").append(this.paperCode).append(TAB).append("hasAssignment = ").append(this.hasAssignment).append(TAB).append("howMany = ").append(this.howMany).append(" )");
         return retValue.toString();
     }
+
+    
 }
