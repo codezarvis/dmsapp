@@ -318,9 +318,11 @@ public class DataReportController {
 
                 reportObject.setAssignment("NA");
                 reportObject.setHasAssignment("NA");
+                reportObject.setHowMany("20 M");
             } else {
                 //reportObject.setAssignment("5");
                 reportObject.setHasAssignment("5");
+                reportObject.setHowMany("15 M");
             }
 
 
