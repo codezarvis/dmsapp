@@ -160,7 +160,7 @@ public class DataReportController {
         for (MarksMaster typeTwo : marksList) {
             attendanceMarks.add(typeTwo.getAttendanceMarks());
             typeTwoMarks.add(typeTwo.getInternalTwo());
-            //assignMenteMarks2.add(typeTwo.getAssignmentMarks());
+        //assignMenteMarks2.add(typeTwo.getAssignmentMarks());
 
         }
 
@@ -223,14 +223,14 @@ public class DataReportController {
                 if (typeOneMarks.get(i).equalsIgnoreCase("A") && typeTwoMarks.get(i).equalsIgnoreCase("A")) {
                     reportObject.setTotalMarks(0);
 
-                    LOG.debug("===========Both A and A"+assignMenteMarks1.get(i) + "\t"+reportObject.getAttendance());
-                    if(assignMenteMarks1.get(i) == null) {
+                    LOG.debug("===========Both A and A" + assignMenteMarks1.get(i) + "\t" + reportObject.getAttendance());
+                    if (assignMenteMarks1.get(i) == null) {
                         reportObject.setGrandTotal(String.valueOf(Integer.parseInt(reportObject.getAttendance())));
-                    }else {
+                    } else {
                         reportObject.setGrandTotal(String.valueOf(Integer.parseInt(assignMenteMarks1.get(i)) + Integer.parseInt(reportObject.getAttendance())));
                     }
-                    //reportObject.setGrandTotal(String.valueOf(Integer.parseInt(assignMenteMarks1.get(i)) + Integer.parseInt(reportObject.getAttendance())));
-                    //reportObject.setGrandTotal("NA");
+                //reportObject.setGrandTotal(String.valueOf(Integer.parseInt(assignMenteMarks1.get(i)) + Integer.parseInt(reportObject.getAttendance())));
+                //reportObject.setGrandTotal("NA");
                 }
 
                 if (!typeOneMarks.get(i).equalsIgnoreCase("A")) {
@@ -333,7 +333,11 @@ public class DataReportController {
         LOG.debug(reportObjects);
 
 
+        String reportTitle = paperCode.trim() + "(" + util.getBranch() + "(Year-" + util.getYear() + "Semister-" + util.getSemister() + ")";
         response.setContentType("application/pdf");
+        response.setHeader("Cache-Control", "max-age=0");
+        response.setHeader("Content-Disposition", "attachment" + "; filename=" + reportTitle+".pdf");
+
         ServletOutputStream servletOutputStream = null;
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         InputStream inputStream = null;
@@ -391,6 +395,8 @@ public class DataReportController {
 
 
         }
+
+
         return "";
 
     }
