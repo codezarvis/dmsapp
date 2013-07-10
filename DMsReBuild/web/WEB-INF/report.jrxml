@@ -18,6 +18,7 @@
 	<field name="grandTotal" class="java.lang.String"/>
 	<field name="paperCode" class="java.lang.String"/>
 	<field name="hasAssignment" class="java.lang.String"/>
+	<field name="howMany" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -69,7 +70,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="SansSerif" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Semesster]]></text>
+				<text><![CDATA[Semester]]></text>
 			</staticText>
 			<staticText>
 				<reportElement uuid="49916543-4b7e-4c29-8b17-71e494e855d7" x="58" y="0" width="230" height="28"/>
@@ -164,11 +165,10 @@
 					<bottomPen lineWidth="1.5"/>
 					<rightPen lineWidth="1.5"/>
 				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
+				<textElement verticalAlignment="Middle">
 					<font fontName="SansSerif" isBold="true"/>
 				</textElement>
-				<text><![CDATA[IA - I
-20 M]]></text>
+				<text><![CDATA[      IA - I]]></text>
 			</staticText>
 			<staticText>
 				<reportElement uuid="49916543-4b7e-4c29-8b17-71e494e855d7" x="139" y="112" width="81" height="28"/>
@@ -179,11 +179,10 @@
 					<bottomPen lineWidth="1.5"/>
 					<rightPen lineWidth="1.5"/>
 				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
+				<textElement verticalAlignment="Middle">
 					<font fontName="SansSerif" isBold="true"/>
 				</textElement>
-				<text><![CDATA[IA - II
-20 M]]></text>
+				<text><![CDATA[      IA - II]]></text>
 			</staticText>
 			<staticText>
 				<reportElement uuid="49916543-4b7e-4c29-8b17-71e494e855d7" x="220" y="112" width="81" height="28"/>
@@ -194,11 +193,11 @@
 					<bottomPen lineWidth="1.5"/>
 					<rightPen lineWidth="1.5"/>
 				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
+				<textElement verticalAlignment="Middle">
 					<font fontName="SansSerif" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Marks
-out of 20]]></text>
+				<text><![CDATA[   Marks
+   out of]]></text>
 			</staticText>
 			<staticText>
 				<reportElement uuid="49916543-4b7e-4c29-8b17-71e494e855d7" x="301" y="112" width="68" height="28"/>
@@ -333,6 +332,21 @@ Marks
 				<reportElement uuid="09ac14e7-5f56-40be-897c-891b195bac89" x="453" y="30" width="31" height="26"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{hasAssignment}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="45eb634f-c7a7-4257-8052-550ab0e87572" x="100" y="116" width="36" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{howMany}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="6d4dd904-1138-4b26-8e0c-db531e8591be" x="172" y="116" width="48" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{howMany}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="1be56fb7-102d-468e-b44e-4ee50583e28e" x="278" y="117" width="20" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{howMany}]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageHeader>
