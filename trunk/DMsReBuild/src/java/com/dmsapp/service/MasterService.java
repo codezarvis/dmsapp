@@ -14,10 +14,17 @@ import java.util.List;
  */
 public interface MasterService extends Service{
 
-    List<Master> findBy(String year, String branch, String semister);
+   List<Master> findBy(String year, String branch, String semister);
 
     List<Master> getAll();
 
     Master findByPaperName(String paper,String year, String branch, String sem);
 
+    Boolean create(Master master);
+
+    List<Master> getStudentsByPage(int pageSize, int page, String sidx, String sord);
+
+    int getNoOfRecords() ;
+
+    Boolean delete(Master master);
 }
