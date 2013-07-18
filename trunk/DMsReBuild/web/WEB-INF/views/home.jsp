@@ -5,7 +5,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=0" />
 	<title>SDMS College</title>
 	<link rel="shortcut icon" type="image/x-icon" href="${pageContext.request.contextPath}/resources/css/images/favicon.ico" />
-	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css" type="text/css" media="all" />
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/appstyle.css" type="text/css" media="all" />
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/flexslider.css" type="text/css" media="all" />
 	<link href='http://fonts.googleapis.com/css?family=Ubuntu:400,500,700' rel='stylesheet' type='text/css' />
 
@@ -175,6 +175,7 @@
 								<li><a href="${pageContext.request.contextPath}/attendance">Class Work Attendance</a></li>
 								<li><a href="${pageContext.request.contextPath}/report">Reports</a></li>
 								<li><a href="${pageContext.request.contextPath}/editMarks">Update Internal Marks</a></li>
+                                <li><a href="${pageContext.request.contextPath}/adminDash">Manage Branches</a></li>
 							</ul>
 						</div>
 						<div class="col">
@@ -184,6 +185,7 @@
 								<li><a href="#">Book Store</a></li>
 								<li><a href="#">Courses</a></li>
 								<li><a href="#">Professional Programs</a></li>
+                                <li><a href="#">Diploma Programs</a></li>
 							</ul>
 						</div>
 						<div class="col">
@@ -193,6 +195,7 @@
 								<li><a href="#">Post Graduate</a></li>
 								<li><a href="#">Certificate Courses </a></li>
 								<li><a href="#">Distance Education</a></li>
+                                <li><a href="#">Dual Certification</a></li>
 							</ul>
 						</div>
 						<div class="col">
@@ -202,6 +205,7 @@
 								<li><a href="#">Reports</a></li>
 								<li><a href="#">Downloads</a></li>
 								<li><a href="#">Results</a></li>
+                                <li><a href="#">Transcripts</a></li>
 							</ul>
 						</div>
 						<div class="cl">&nbsp;</div>
