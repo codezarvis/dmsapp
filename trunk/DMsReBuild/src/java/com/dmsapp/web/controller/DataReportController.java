@@ -367,6 +367,7 @@ public class DataReportController {
 
             inputStream.close();
 
+            
         } catch (Exception exception) {
             LOG.debug("ReportsController", exception);
         } finally {
